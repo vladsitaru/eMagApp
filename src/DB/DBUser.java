@@ -9,7 +9,7 @@ public class DBUser {
 
           boolean isInserted=false;
         try {
-            // 1. ma conectez la db
+
             final String URL = "jdbc:postgresql://idc.cluster-custom-cjcsijnttbb2.eu-central-1.rds.amazonaws.com:5432/vladsitaru";
             final String USERNAME = "ftuser";
 
@@ -20,15 +20,12 @@ public class DBUser {
 
             Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
 
-            // 2. creez un prepared statement si il populez cu date
             PreparedStatement pSt = conn.prepareStatement("INSERT INTO users (username, password, admin) VALUES(?,?,?)");
             pSt.setString(1,u.getUsername());
             pSt.setString(2,u.getPassword());
             pSt.setBoolean(3,u.getIsAdmin());
 
 
-
-            // 3. executie
             int insert = pSt.executeUpdate();
             if(insert!=-1)
                 isInserted=true;
@@ -36,7 +33,6 @@ public class DBUser {
             pSt.close();
             conn.close();
         } catch (SQLException | ClassNotFoundException e) {
-//            e.printStackTrace();
             isInserted=false;
 
         }
@@ -48,7 +44,7 @@ public class DBUser {
     public User login (String username, String password) {
 
         User u = null;
-        // 1. ma conectez la db
+
         final String URL = "jdbc:postgresql://idc.cluster-custom-cjcsijnttbb2.eu-central-1.rds.amazonaws.com:5432/vladsitaru";
         final String USERNAME = "ftuser";
         final String PASSWORD = System.getenv("PWD");
@@ -57,9 +53,6 @@ public class DBUser {
             Class.forName("org.postgresql.Driver");
             Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
 
-            // 2. fac un query pe o tabela , intai creez obiectul
-
-
 
             PreparedStatement pSt = conn.prepareStatement("select id, username, password from users where username=? and password=?");
 
@@ -67,11 +60,9 @@ public class DBUser {
             pSt.setString(2,password);
 
 
-            // 3. executie
             ResultSet rs = pSt.executeQuery();
 
 
-            // atata timp cat am randuri
             while (rs.next()) {
 
                 u = new User();
@@ -122,7 +113,6 @@ public class DBUser {
     public static boolean checkIfAdmin(User u) {
 
         boolean isAdmin = false;
-        // 1. ma conectez la db
         final String URL = "jdbc:postgresql://idc.cluster-custom-cjcsijnttbb2.eu-central-1.rds.amazonaws.com:5432/vladsitaru";
         final String USERNAME = "ftuser";
         final String PASSWORD = "FastTrack&2022NEW";
@@ -131,9 +121,6 @@ public class DBUser {
             Class.forName("org.postgresql.Driver");
             Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
 
-            // 2. fac un query pe o tabela , intai creez obiectul
-
-
 
             PreparedStatement pSt = conn.prepareStatement("select * from users where username=? and password=?");
 
@@ -141,11 +128,9 @@ public class DBUser {
             pSt.setString(2,u.getPassword());
 
 
-            // 3. executie
             ResultSet rs = pSt.executeQuery();
 
 
-            // atata timp cat am randuri
             while (rs.next()) {
                 if(rs.getBoolean("admin")==true) {
                     isAdmin = true;

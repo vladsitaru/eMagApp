@@ -1,6 +1,4 @@
 package DB;
-
-import javax.xml.transform.Result;
 import java.sql.*;
 import java.util.*;
 
@@ -8,7 +6,6 @@ public class DBProduct {
 
     public int listAllProducts () {
 
-        // 1. ma conectez la db
         final String URL = "jdbc:postgresql://idc.cluster-custom-cjcsijnttbb2.eu-central-1.rds.amazonaws.com:5432/vladsitaru";
         final String USERNAME = "ftuser";
         final String PASSWORD = System.getenv("PWD");
@@ -18,17 +15,12 @@ public class DBProduct {
             Class.forName("org.postgresql.Driver");
             Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
 
-            // 2. fac un query pe o tabela , intai creez obiectul
-
-
-
             PreparedStatement pSt = conn.prepareStatement("select id, productname, price, isonstock, category from products order by id ASC");
 
-            // 3. executie
             ResultSet rs = pSt.executeQuery();
 
 
-            // atata timp cat am randuri
+
             System.out.println("ID |     Products           |  Price  | Stock status |  Category");
             System.out.println("---|------------------------|---------|--------------|----------");
 
@@ -51,10 +43,10 @@ public class DBProduct {
 
     public HashMap listProductsByCategory () {
 
-        // map pentru stocarea id-ului de produs cu cel afisat in query
+
         HashMap productIdMap = new HashMap();
 
-        // 1. ma conectez la db
+
         final String URL = "jdbc:postgresql://idc.cluster-custom-cjcsijnttbb2.eu-central-1.rds.amazonaws.com:5432/vladsitaru";
         final String USERNAME = "ftuser";
         final String PASSWORD = System.getenv("PWD");
@@ -83,14 +75,14 @@ public class DBProduct {
             PreparedStatement pSt = conn.prepareStatement("select * from products where category=?");
 
             pSt.setString(1,category);
-            // 3. executie
+
             ResultSet rs = pSt.executeQuery();
 
             System.out.println();
             System.out.println("---|------------------------|---------|--------------|----------");
             System.out.println("ID |     Products           |  Price  | Stock status |  Category");
             System.out.println("---|------------------------|---------|--------------|----------");
-            // atata timp cat am randuri
+
             i = 1;
             while (rs.next()) {
                 productIdMap.put(i, rs.getInt("id"));
@@ -111,10 +103,10 @@ public class DBProduct {
     }
 
     public HashMap searchProductsByKeyword () {
-        // map pentru stocarea id-ului de produs cu cel afisat in query
+
         HashMap productIdMap = new HashMap();
 
-        // 1. ma conectez la db
+
         final String URL = "jdbc:postgresql://idc.cluster-custom-cjcsijnttbb2.eu-central-1.rds.amazonaws.com:5432/vladsitaru";
         final String USERNAME = "ftuser";
         final String PASSWORD = System.getenv("PWD");
@@ -123,7 +115,6 @@ public class DBProduct {
             Class.forName("org.postgresql.Driver");
             Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
 
-            // 2. fac un query pe o tabela , intai creez obiectul
 
             System.out.println("Enter the keyword: ");
             String keyword = new Scanner(System.in).nextLine();
@@ -133,12 +124,10 @@ public class DBProduct {
 
             PreparedStatement pSt = conn.prepareStatement(sql);
 
-//            pSt.setString(1,"'%"+keyword+"%'");
-            // 3. executie
             ResultSet rs = pSt.executeQuery();
 
 
-            // atata timp cat am randuri
+
             int i = 1;
 
             System.out.println();
@@ -166,7 +155,7 @@ public class DBProduct {
     public HashMap listAllProductsByPriceASC() {
 
         HashMap productIdMap = new HashMap();
-        // 1. ma conectez la db
+
         final String URL = "jdbc:postgresql://idc.cluster-custom-cjcsijnttbb2.eu-central-1.rds.amazonaws.com:5432/vladsitaru";
         final String USERNAME = "ftuser";
         final String PASSWORD = System.getenv("PWD");
@@ -175,15 +164,15 @@ public class DBProduct {
             Class.forName("org.postgresql.Driver");
             Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
 
-            // 2. fac un query pe o tabela , intai creez obiectul
+
 
             PreparedStatement pSt = conn.prepareStatement("select * from products ORDER BY price ASC");
 
-            // 3. executie
+
             ResultSet rs = pSt.executeQuery();
 
 
-            // atata timp cat am randuri
+
             int i = 1;
 
             System.out.println();
@@ -220,15 +209,11 @@ public class DBProduct {
             Class.forName("org.postgresql.Driver");
             Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
 
-            // 2. fac un query pe o tabela , intai creez obiectul
-
             PreparedStatement pSt = conn.prepareStatement("select * from products ORDER BY price DESC");
 
-            // 3. executie
             ResultSet rs = pSt.executeQuery();
 
 
-            // atata timp cat am randuri
             int i = 1;
 
             System.out.println();
@@ -256,7 +241,7 @@ public class DBProduct {
     public HashMap listAllProductsByNameASC() {
 
         HashMap productIdMap = new HashMap();
-        // 1. ma conectez la db
+
         final String URL = "jdbc:postgresql://idc.cluster-custom-cjcsijnttbb2.eu-central-1.rds.amazonaws.com:5432/vladsitaru";
         final String USERNAME = "ftuser";
         final String PASSWORD = System.getenv("PWD");
@@ -265,15 +250,11 @@ public class DBProduct {
             Class.forName("org.postgresql.Driver");
             Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
 
-            // 2. fac un query pe o tabela , intai creez obiectul
-
             PreparedStatement pSt = conn.prepareStatement("select * from products ORDER BY productname ASC");
 
-            // 3. executie
             ResultSet rs = pSt.executeQuery();
 
 
-            // atata timp cat am randuri
             int i = 1;
 
             System.out.println();
@@ -301,7 +282,7 @@ public class DBProduct {
     public HashMap listAllProductsByNameDESC() {
 
         HashMap productIdMap = new HashMap();
-        // 1. ma conectez la db
+
         final String URL = "jdbc:postgresql://idc.cluster-custom-cjcsijnttbb2.eu-central-1.rds.amazonaws.com:5432/vladsitaru";
         final String USERNAME = "ftuser";
         final String PASSWORD = System.getenv("PWD");
@@ -310,15 +291,12 @@ public class DBProduct {
             Class.forName("org.postgresql.Driver");
             Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
 
-            // 2. fac un query pe o tabela , intai creez obiectul
 
             PreparedStatement pSt = conn.prepareStatement("select * from products ORDER BY productname DESC");
 
-            // 3. executie
             ResultSet rs = pSt.executeQuery();
 
 
-            // atata timp cat am randuri
             int i = 1;
 
             System.out.println();
@@ -344,10 +322,8 @@ public class DBProduct {
     }
 
     public HashMap searchKeywordProductsByKeyword (String keyword) {
-        // map pentru stocarea id-ului de produs cu cel afisat in query
+
         HashMap productIdMap = new HashMap();
-
-
 
         // 1. ma conectez la db
         final String URL = "jdbc:postgresql://idc.cluster-custom-cjcsijnttbb2.eu-central-1.rds.amazonaws.com:5432/vladsitaru";
@@ -363,12 +339,11 @@ public class DBProduct {
 
             PreparedStatement pSt = conn.prepareStatement(sql);
 
-//            pSt.setString(1,"'%"+keyword+"%'");
-            // 3. executie
+
             ResultSet rs = pSt.executeQuery();
 
 
-            // atata timp cat am randuri
+
             int i = 1;
 
             System.out.println();
@@ -412,7 +387,6 @@ public class DBProduct {
 
             Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
 
-            // 2. creez un prepared statement si il populez cu date
             PreparedStatement pSt = conn.prepareStatement("INSERT INTO products (productname, price, isonstock, category) VALUES(?,?,?,?)");
 
             System.out.println("Enter the product name: ");
@@ -454,8 +428,6 @@ public class DBProduct {
             pSt.setString(4,category);
 
 
-
-            // 3. executie
             int insert = pSt.executeUpdate();
             if(insert!=-1) {
                 isInserted = true;

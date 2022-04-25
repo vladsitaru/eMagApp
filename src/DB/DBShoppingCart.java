@@ -4,7 +4,6 @@ import java.sql.*;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.*;
-import java.time.LocalDateTime;
 
 public class DBShoppingCart {
 
@@ -155,9 +154,6 @@ public class DBShoppingCart {
         try {
             Class.forName("org.postgresql.Driver");
             Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
-
-            // 2. fac un query pe o tabela , intai creez obiectul
-
 
             PreparedStatement pStExtract = conn.prepareStatement("select * from shoppingcart where userid=?");
 
@@ -365,7 +361,6 @@ public class DBShoppingCart {
             pStExtract.setString(1, productname);
 
             ResultSet rs = pStExtract.executeQuery();
-///
 
             PreparedStatement pStCount = conn.prepareStatement("SELECT COUNT(*) FROM shoppingcart WHERE userid=? and productname=?");
 
